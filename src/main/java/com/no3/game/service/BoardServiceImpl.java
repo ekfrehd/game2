@@ -5,6 +5,7 @@ import com.no3.game.dto.BoardDTO;
 import com.no3.game.dto.PageRequestDTO;
 import com.no3.game.dto.PageResultDTO;
 import com.no3.game.entity.Board;
+import com.no3.game.entity.Item;
 import com.no3.game.entity.Member;
 import com.no3.game.repository.BoardRepository;
 import com.no3.game.repository.ReplyRepository;
@@ -46,7 +47,7 @@ public class BoardServiceImpl implements BoardService{
 
         log.info(pageRequestDTO);
 
-        Function<Object[], BoardDTO> fn = (en -> entityToDTO((Board)en[0],(Member)en[1],(Long)en[2]));
+        Function<Object[], BoardDTO> fn = (en -> entityToDTO((Board)en[0],(Member)en[1],(Item) en[2]));
 
 //        Page<Object[]> result = repository.getBoardWithReplyCount(
 //                pageRequestDTO.getPageable(Sort.by("bno").descending())  );
@@ -66,7 +67,7 @@ public class BoardServiceImpl implements BoardService{
 
         Object[] arr = (Object[])result;
 
-        return entityToDTO((Board)arr[0], (Member)arr[1], (Long)arr[2]);
+        return entityToDTO((Board)arr[0], (Member)arr[1], (Item) arr[2]);
     }
 
     @Transactional
@@ -87,7 +88,6 @@ public class BoardServiceImpl implements BoardService{
         Optional<Board> result = repository.findById(boardDTO.getBno());
 
             Board board = result.get();
-            board.changeTitle(boardDTO.getTitle());
             board.changeGrade(boardDTO.getGrade());
             board.changeContent(boardDTO.getContent());
             repository.save(board);

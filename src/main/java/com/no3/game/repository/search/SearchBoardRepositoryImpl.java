@@ -1,9 +1,6 @@
 package com.no3.game.repository.search;
 
-import com.no3.game.entity.Board;
-import com.no3.game.entity.QBoard;
-import com.no3.game.entity.QMember;
-import com.no3.game.entity.QReply;
+import com.no3.game.entity.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Order;
@@ -34,14 +31,14 @@ public class SearchBoardRepositoryImpl extends QuerydslRepositorySupport impleme
         log.info("search1........................");
 
         QBoard board = QBoard.board;
-        QReply reply = QReply.reply;
+        QItem item = QItem.item;
         QMember member = QMember.member;
 
         JPQLQuery<Board> jpqlQuery = from(board);
         jpqlQuery.leftJoin(member).on(board.writer.eq(member));
-        jpqlQuery.leftJoin(reply).on(reply.board.eq(board));
+        jpqlQuery.leftJoin(item).on(board.item.eq(item));
 
-        JPQLQuery<Tuple> tuple = jpqlQuery.select(board, member.email, reply.count());
+        JPQLQuery<Tuple> tuple = jpqlQuery.select(board, member.email, item.title);
         tuple.groupBy(board);
 
         log.info("---------------------------");
@@ -61,16 +58,17 @@ public class SearchBoardRepositoryImpl extends QuerydslRepositorySupport impleme
         log.info("searchPage.............................");
 
         QBoard board = QBoard.board;
-        QReply reply = QReply.reply;
+        QItem item = QItem.item;
         QMember member = QMember.member;
 
         JPQLQuery<Board> jpqlQuery = from(board);
         jpqlQuery.leftJoin(member).on(board.writer.eq(member));
-        jpqlQuery.leftJoin(reply).on(reply.board.eq(board));
+        
+        jpqlQuery.leftJoin(item).on(board.item.eq(item));
 
         //SELECT b, w, count(r) FROM Board b
-        //LEFT JOIN b.writer w LEFT JOIN Reply r ON r.board = b
-        JPQLQuery<Tuple> tuple = jpqlQuery.select(board, member, reply.count());
+        //LEFT JOIN b.writer w LEFT JOIN item r ON r.board = b
+        JPQLQuery<Tuple> tuple = jpqlQuery.select(board, member, item);
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = board.bno.gt(0L);
@@ -85,7 +83,7 @@ public class SearchBoardRepositoryImpl extends QuerydslRepositorySupport impleme
             for (String t:typeArr) {
                 switch (t){
                     case "t":
-                        conditionBuilder.or(board.title.contains(keyword));
+                        conditionBuilder.or(item.title.contains(keyword));
                         break;
                     case "w":
                         conditionBuilder.or(member.email.contains(keyword));

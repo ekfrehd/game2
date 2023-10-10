@@ -27,7 +27,6 @@ public interface BoardService {
         Board board = Board.builder()
                 .bno(dto.getBno())
                 .item(item)
-                .title(item.getTitle())
                 .content(dto.getContent())
                 .writer(member)
                 .grade(dto.getGrade())
@@ -35,18 +34,17 @@ public interface BoardService {
         return board;
     }
 
-    default BoardDTO entityToDTO(Board board, Member member, Long replyCount) {
+    default BoardDTO entityToDTO(Board board, Member member, Item item) {
 
         BoardDTO boardDTO = BoardDTO.builder()
                 .bno(board.getBno())
-                .title(board.getTitle())
+                .title(item.getTitle())
                 .content(board.getContent())
                 .grade(board.getGrade())
                 .regDate(board.getRegDate())
                 .modDate(board.getModDate())
                 .writerEmail(member.getEmail())
                 .writerName(member.getName())
-                .replyCount(replyCount.intValue()) //int로 처리하도록
                 .build();
 
         return boardDTO;

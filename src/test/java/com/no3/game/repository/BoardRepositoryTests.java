@@ -2,6 +2,7 @@ package com.no3.game.repository;
 
 
 import com.no3.game.entity.Board;
+import com.no3.game.entity.Item;
 import com.no3.game.entity.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,13 @@ public class BoardRepositoryTests {
 
             Long id = (long)(i);
             Member member = Member.builder().id(id).build();
+            Item item = Item.builder().id((long)(Math.random()*5)+102).build();
 
             Board board = Board.builder()
-                    .title("Title..."+i)
+
                     .content("Content...." + i)
                     .writer(member)
+                    .item(item)
                     .grade((int)(Math.random()*5)+1)
                     .build();
 

@@ -18,7 +18,6 @@ public class Board extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bno;
 
-    private String title ;
 
     @Column(name="text")
     private String content;
@@ -31,9 +30,7 @@ public class Board extends BaseEntity {
     @ManyToOne (fetch = FetchType.LAZY)
     private Member writer;
 
-    public void changeTitle(String title){
-        this.title = title;
-    }
+
 
     public void changeGrade(int grade){
         this.grade = grade;

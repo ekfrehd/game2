@@ -1,11 +1,10 @@
 package com.no3.game.entity;
 
-import lombok.*;
-
-import javax.persistence.*;
 import com.no3.game.constant.ItemSellStatus;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity //클래스를 엔티티로 선언
@@ -20,7 +19,7 @@ public class Item extends BaseEntity {
     @Id
     @Column(name="item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;      // 상품 코드
+    private Long id;
 
     @Column(nullable = false, length = 50) // not null 설정 및 길이 지정, nullable = false : not null
     private String title; //상품명
