@@ -4,6 +4,8 @@ import com.no3.game.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,18 +33,31 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/")          // 로그아웃 성공 시 이동할 URL 설정
         ;
 
-        /*http.authorizeRequests()
-                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                .requestMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-        ;
+//        http.authorizeRequests()
+//                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
+//                .requestMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()
+//                .requestMatchers("/admin/**").hasRole("ADMIN")
+//                .anyRequest().authenticated()
+//        ;
 
+//        http.authorizeRequests()
+//                        .mvcMatchers("/","/members/**","/item/**","/image/**")
+//                                .permitAll()
+//                                        .mvcMatchers("/admin/**").hasRole("ADMIN")
+//                        .anyRequest().authenticated()
+//                ;
+//
         http.exceptionHandling()
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-        ;*/
+        ;
 
         return http.build();
+    }
+
+    @Bean
+    AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
@@ -50,4 +65,8 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     } // 해시 함수를 이용해 비밀번호를 암호화하여 저장
 
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "img/**");
+//    }
 }
