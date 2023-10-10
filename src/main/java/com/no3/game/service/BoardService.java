@@ -5,6 +5,7 @@ import com.no3.game.dto.BoardDTO;
 import com.no3.game.dto.PageRequestDTO;
 import com.no3.game.dto.PageResultDTO;
 import com.no3.game.entity.Board;
+import com.no3.game.entity.Item;
 import com.no3.game.entity.Member;
 
 public interface BoardService {
@@ -22,13 +23,14 @@ public interface BoardService {
     default Board dtoToEntity(BoardDTO dto){
 
         Member member = Member.builder().email(dto.getWriterEmail()).build();
-
+        Item item = Item.builder().title(dto.getTitle()).build();
         Board board = Board.builder()
                 .bno(dto.getBno())
-                .title(dto.getTitle())
+                .item(item)
+                .title(item.getTitle())
                 .content(dto.getContent())
                 .writer(member)
-                .grade(1)
+                .grade(dto.getGrade())
                 .build();
         return board;
     }

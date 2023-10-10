@@ -16,6 +16,9 @@ public interface BoardRepository extends JpaRepository<Board, Long>, SearchBoard
     @Query("select b, w from Board b left join b.writer w where b.bno =:bno")
     Object getBoardWithWriter(@Param("bno") Long bno);
 
+    @Query("select b, i from Board b left join b.item i where b.bno =:bno")
+    Object getBoardWithItem(@Param("bno") Long bno);
+
     @Query("SELECT b, r FROM Board b LEFT JOIN Reply r ON r.board = b WHERE b.bno = :bno")
     List<Object[]> getBoardWithReply(@Param("bno") Long bno);
 

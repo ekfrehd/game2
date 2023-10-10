@@ -44,7 +44,9 @@
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
                 <th scope="col">Writer</th>
+                <th scope="col">Grade</th>
                 <th scope="col">Regdate</th>
+
             </tr>
             </thead>
             <tbody>
@@ -60,6 +62,7 @@
                 </th>
                 <td>[[${dto.title}]] ----------------  [<b th:text="${dto.replyCount}"></b>]</td>
                 <td>[[${dto.writerName}]] <small>[[${dto.writerEmail}]]</small> </td>
+                <td>[[${dto.grade}]]</td>
                 <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
             </tr>
 

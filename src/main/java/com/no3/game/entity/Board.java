@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = /*{"item",*/"writer"/*}*/)
+@ToString(exclude = {"item","writer"})
 public class Board extends BaseEntity {
 
     @Id
@@ -18,15 +18,15 @@ public class Board extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bno;
 
-    private String title;
+    private String title ;
 
     @Column(name="text")
     private String content;
 
     private int grade;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Item item;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Item item;
 
     @ManyToOne (fetch = FetchType.LAZY)
     private Member writer;

@@ -35,6 +35,7 @@ public class BoardRepositoryTests {
                     .title("Title..."+i)
                     .content("Content...." + i)
                     .writer(member)
+                    .grade((int)(Math.random()*5)+1)
                     .build();
 
             boardRepository.save(board);
